@@ -1,4 +1,6 @@
 import 'package:admin/modules/login/screen/page_login.dart';
+import 'package:admin/modules/profile/bloc/bloc_profile.dart';
+import 'package:admin/modules/profile/repo/repo_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
@@ -44,7 +46,13 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => LocalAuth(),lazy: false,)
+        Provider(
+          create: (context) => LocalAuth(),
+          lazy: false,
+        ),
+        Provider(
+          create: (context) => ProfileBloc(ProfileHttpRepo()),
+        )
       ],
       child: MaterialApp(
         title: 'Aplikasi Admin',

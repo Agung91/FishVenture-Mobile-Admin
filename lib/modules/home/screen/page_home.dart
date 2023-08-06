@@ -1,8 +1,11 @@
 import 'package:admin/config/text_style.dart';
 import 'package:admin/modules/home/widget/w_home.dart';
+import 'package:admin/modules/profile/bloc/bloc_profile.dart';
+import 'package:admin/modules/profile/model/model_profile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:admin/config/colors.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -63,7 +66,7 @@ class _AppbarHome extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final blocProfile = context.read<EditProfileBloc>();
+    final blocProfile = context.read<ProfileBloc>();
     return Container(
       height: 101,
       color: CustomColors.primary,
@@ -89,11 +92,16 @@ class _AppbarHome extends StatelessWidget implements PreferredSizeWidget {
                         .copyWith(color: CustomColors.white),
                   ),
                   const SizedBox(height: 2.0),
-                  Text(
-                    '-',
-                    style: CustomTextStyle.body1Medium
-                        .copyWith(color: CustomColors.white),
-                  ),
+                  StreamBuilder<ProfileModel?>(
+                      stream: blocProfile.profile.stream,
+                      initialData: blocProfile.profile.value,
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.data?.name ?? '-',
+                          style: CustomTextStyle.body1Medium
+                              .copyWith(color: CustomColors.white),
+                        );
+                      }),
                 ],
               ),
             ],
