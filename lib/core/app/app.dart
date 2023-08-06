@@ -43,9 +43,11 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [],
+      providers: [
+        Provider(create: (context) => LocalAuth(),lazy: false,)
+      ],
       child: MaterialApp(
-        title: 'Aplikasi Seller',
+        title: 'Aplikasi Admin',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

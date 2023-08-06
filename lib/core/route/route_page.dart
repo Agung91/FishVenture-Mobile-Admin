@@ -1,3 +1,4 @@
+import 'package:admin/modules/home/screen/page_home.dart';
 import 'package:admin/modules/login/screen/page_login.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,17 @@ abstract class RoutePage {
 }
 
 class RouteLogin extends RoutePage {
-  RouteLogin() : super(MaterialPage(child: LoginPage()), 'login');
+  RouteLogin()
+      : super(
+          const MaterialPage(child: LoginPage()),
+          'login',
+        );
 }
+
 class RouteHome extends RoutePage {
-  RouteHome() : super(MaterialPage(child: LoginPage()), 'login');
+  RouteHome()
+      : super(
+          const MaterialPage(child: HomePage()),
+          'home',
+        );
 }
