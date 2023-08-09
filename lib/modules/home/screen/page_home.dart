@@ -1,5 +1,6 @@
 import 'package:admin/config/text_style.dart';
 import 'package:admin/modules/home/widget/w_home.dart';
+import 'package:admin/modules/pond/bloc/bloc_pond.dart';
 import 'package:admin/modules/profile/bloc/bloc_profile.dart';
 import 'package:admin/modules/profile/model/model_profile.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocPond = context.read<PondBloc>();
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: const _AppbarHome(),
       body: ListView.separated(
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
         itemBuilder: (context, index) {
           return const WHome();

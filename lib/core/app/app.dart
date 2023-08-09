@@ -1,4 +1,6 @@
 import 'package:admin/modules/login/screen/page_login.dart';
+import 'package:admin/modules/pond/bloc/bloc_pond.dart';
+import 'package:admin/modules/pond/repo/repo_pond.dart';
 import 'package:admin/modules/profile/bloc/bloc_profile.dart';
 import 'package:admin/modules/profile/repo/repo_profile.dart';
 import 'package:flutter/foundation.dart';
@@ -52,7 +54,10 @@ class _AppState extends State<App> {
         ),
         Provider(
           create: (context) => ProfileBloc(ProfileHttpRepo()),
-        )
+        ),
+        Provider(
+          create: (context) => (PondBloc(PondHttpRepo())),
+        ),
       ],
       child: MaterialApp(
         title: 'Aplikasi Admin',
