@@ -1,6 +1,8 @@
+import 'package:admin/common/custom/empty_data.dart';
 import 'package:admin/config/text_style.dart';
 import 'package:admin/modules/home/widget/w_home.dart';
 import 'package:admin/modules/pond/bloc/bloc_pond.dart';
+import 'package:admin/modules/pond/model/model_pond.dart';
 import 'package:admin/modules/profile/bloc/bloc_profile.dart';
 import 'package:admin/modules/profile/model/model_profile.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +19,35 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: const _AppbarHome(),
-      body: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
-        itemBuilder: (context, index) {
-          return const WHome();
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 8);
-        },
-        itemCount: 12,
-      ),
+      body: StreamBuilder<List<PondModel>>(
+          stream: blocPond.listPond.stream,
+          initialData: blocPond.listPond.value,
+          builder: (context, snapshot) {
+            final listData = snapshot.data;
+            if (listData == null || listData.isEmpty) {
+              return EmptyData(
+                label: 'Belum ada pengajuan terbaru',
+                onRefresh: () => blocPond.getPonds(),
+              );
+            }
+            return RefreshIndicator(
+              onRefresh: () => blocPond.getPonds(),
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
+                itemBuilder: (context, index) {
+                  return WHome(
+                    pondModel: listData[index],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 8);
+                },
+                itemCount: listData.length,
+              ),
+            );
+          }),
       // bottomNavigationBar: Container(
       //   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       //   color: CustomColors.white,

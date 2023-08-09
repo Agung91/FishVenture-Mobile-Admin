@@ -12,7 +12,7 @@ class PondBloc {
   Future<void> getPonds() async {
     try {
       final response = await _repo.getListPond();
-      print(response.data);
+      listPond.add(response);
     } catch (e) {
       rethrow;
     }
