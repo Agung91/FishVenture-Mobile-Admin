@@ -13,13 +13,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String appbarText;
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size(double.infinity, 88);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       color: CustomColors.primary,
       height: 88,
       child: SafeArea(

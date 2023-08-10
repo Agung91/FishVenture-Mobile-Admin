@@ -1,12 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:sstream/sstream.dart';
+
 import 'package:admin/core/auth/bloc/bloc_auth.dart';
 import 'package:admin/core/auth/bloc/event.dart';
 import 'package:admin/modules/login/model/input_login.dart';
 import 'package:admin/modules/login/repo/repo_login.dart';
-import 'package:admin/core/auth/bloc/bloc_auth.dart';
-import 'package:admin/core/auth/bloc/event.dart';
-import 'package:admin/modules/login/repo/repo_login.dart';
-import 'package:flutter/foundation.dart';
-import 'package:sstream/sstream.dart';
 
 class LoginBLoc {
   LoginBLoc(this._repo) {

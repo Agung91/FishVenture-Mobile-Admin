@@ -1,16 +1,10 @@
-import 'package:admin/common/widgets/button.dart';
-import 'package:admin/config/text_style.dart';
-import 'package:admin/core/route/bloc_route.dart';
+import 'package:flutter/material.dart';
+
 import 'package:admin/common/widgets/button.dart';
 import 'package:admin/common/widgets/text_input.dart';
-import 'package:admin/config/colors.dart';
 import 'package:admin/config/text_style.dart';
-import 'package:admin/core/route/bloc_route.dart';
-import 'package:admin/core/route/route_page.dart';
 import 'package:admin/modules/login/bloc/bloc_login.dart';
 import 'package:admin/modules/login/repo/repo_login.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -59,7 +53,7 @@ class LoginPage extends StatelessWidget {
               textButton: 'Login',
               onTap: () async {
                 await blocLogin.login();
-                final snackBar = SnackBar(
+                const snackBar = SnackBar(
                   content: Text('Berhasil Login!!!'),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);

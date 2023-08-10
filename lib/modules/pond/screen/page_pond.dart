@@ -4,6 +4,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import 'package:admin/common/custom/launch_url.dart';
+import 'package:admin/common/model/model_status.dart';
 import 'package:admin/common/widgets/appbar.dart';
 import 'package:admin/config/colors.dart';
 import 'package:admin/config/text_style.dart';
@@ -40,8 +41,8 @@ class PondPage extends StatelessWidget {
             const SizedBox(height: 12),
             _WFile(fileUrl: pondModel.berkas?.first.file ?? '-'),
             const SizedBox(height: 16),
-            const _WActionButton(),
-            const SizedBox(height: 16),
+            if (pondModel.status == StatusSubmission.submission)
+              _WActionButton(pondModel: pondModel),
           ],
         ),
       ),
@@ -82,7 +83,7 @@ class _WFile extends StatelessWidget {
                     style: CustomTextStyle.body1Medium,
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  const Text(
                       'Berikut ini adalah berkas yang di unggah sebagai bagian dari persyaratan yang harus dipenuhi oleh pembudidaya.'),
                 ],
               ),
@@ -122,63 +123,72 @@ class _WFile extends StatelessWidget {
 
 class _WActionButton extends StatelessWidget {
   const _WActionButton({
-    super.key,
-  });
+    Key? key,
+    required this.pondModel,
+  }) : super(key: key);
+
+  final PondModel pondModel;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
-      decoration: BoxDecoration(
-        color: CustomColors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: TextButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: const BorderSide(color: CustomColors.red),
+    final blocPond = context.read<PondBloc>();
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+          decoration: BoxDecoration(
+            color: CustomColors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: TextButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: CustomColors.red),
+                      ),
+                    ),
+                  ),
+                  onPressed: () => blocPond.updatePondDisabled(pondModel.id),
+                  child: Text(
+                    'Tolak',
+                    style: CustomTextStyle.body2Medium
+                        .copyWith(color: CustomColors.red),
                   ),
                 ),
               ),
-              onPressed: () {},
-              child: Text(
-                'Tolak',
-                style: CustomTextStyle.body2Medium
-                    .copyWith(color: CustomColors.red),
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: const BorderSide(color: CustomColors.primary),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: CustomColors.primary),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Terima',
+                    style: CustomTextStyle.body2Medium
+                        .copyWith(color: CustomColors.primary),
                   ),
                 ),
               ),
-              onPressed: () {},
-              child: Text(
-                'Terima',
-                style: CustomTextStyle.body2Medium
-                    .copyWith(color: CustomColors.primary),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
