@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
 import 'package:admin/common/custom/launch_url.dart';
 import 'package:admin/common/widgets/appbar.dart';
 import 'package:admin/config/colors.dart';
 import 'package:admin/config/text_style.dart';
+import 'package:admin/modules/pond/bloc/bloc_pond.dart';
 import 'package:admin/modules/pond/model/model_pond.dart';
+import 'package:admin/modules/pool/model/model_pool.dart';
 
 class PondPage extends StatelessWidget {
   const PondPage({
@@ -33,7 +36,7 @@ class PondPage extends StatelessWidget {
             const SizedBox(height: 12),
             _WAddress(pondModel: pondModel),
             const SizedBox(height: 12),
-            _WPool(),
+            _WPool(listPool: pondModel.listPool ?? []),
             const SizedBox(height: 12),
             _WFile(fileUrl: pondModel.berkas?.first.file ?? '-'),
             const SizedBox(height: 16),
@@ -171,8 +174,11 @@ class _WActionButton extends StatelessWidget {
 
 class _WPool extends StatelessWidget {
   const _WPool({
-    super.key,
-  });
+    Key? key,
+    required this.listPool,
+  }) : super(key: key);
+
+  final List<PoolModel> listPool;
 
   @override
   Widget build(BuildContext context) {
@@ -204,13 +210,13 @@ class _WPool extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return _WPoolCard(
-                    // pool: listPool[index],
-                    );
+                  pool: listPool[index],
+                );
               },
               separatorBuilder: (context, index) {
                 return const SizedBox(width: 8);
               },
-              itemCount: 12,
+              itemCount: listPool.length,
             ),
           ),
         ],
@@ -369,14 +375,13 @@ class _WImage extends StatelessWidget {
 class _WPoolCard extends StatelessWidget {
   const _WPoolCard({
     Key? key,
-    // required this.pool,
+    required this.pool,
   }) : super(key: key);
 
-  // final PoolModel pool;
+  final PoolModel pool;
 
   @override
   Widget build(BuildContext context) {
-    // final submissionBloc = context.read<SubmissionBloc>();
     return Container(
       width: 200,
       // height: 120,
@@ -392,17 +397,16 @@ class _WPoolCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: const FadeInImage(
+            child: FadeInImage(
               height: 120,
               width: 200,
               fit: BoxFit.cover,
-              placeholder: AssetImage('assets/load_img.png'),
-              image: CachedNetworkImageProvider(
-                  'https://picsum.photos/500/500?random='),
+              placeholder: const AssetImage('assets/load_img.png'),
+              image: CachedNetworkImageProvider(pool.image),
             ),
           ),
           const SizedBox(height: 12.0),
@@ -413,16 +417,14 @@ class _WPoolCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  // pool.name,
-                  'pool.name',
+                  pool.name,
                   style: CustomTextStyle.body2SemiBold,
                 ),
                 const SizedBox(height: 6),
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    // '${pool.long}m x ${pool.wide}m',
-                    'https://picsum.photos/500/500?random=',
+                    '${pool.long}m x ${pool.wide}m',
                     style: CustomTextStyle.body2Medium,
                   ),
                 ),

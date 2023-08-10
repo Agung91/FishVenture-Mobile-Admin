@@ -2,6 +2,7 @@ import 'package:admin/common/model/model_status.dart';
 import 'package:admin/modules/pond/model/input_update_pond.dart';
 import 'package:admin/modules/pond/model/model_pond.dart';
 import 'package:admin/modules/pond/repo/repo_pond.dart';
+import 'package:admin/modules/pool/model/model_pool.dart';
 import 'package:sstream/sstream.dart';
 
 class PondBloc {
