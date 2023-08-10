@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
-import 'package:provider/provider.dart';
 
 import 'package:admin/common/custom/launch_url.dart';
 import 'package:admin/common/widgets/appbar.dart';
 import 'package:admin/config/colors.dart';
 import 'package:admin/config/text_style.dart';
-import 'package:admin/modules/pond/bloc/bloc_pond.dart';
 import 'package:admin/modules/pond/model/model_pond.dart';
 
 class PondPage extends StatelessWidget {
@@ -241,40 +239,47 @@ class _WAddress extends StatelessWidget {
         color: CustomColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Alamat',
-                style: CustomTextStyle.body1Medium,
-              ),
-              TextButton.icon(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: const BorderSide(
-                      color: CustomColors.primary,
-                    ),
-                  ),
-                )),
-                onPressed: () => launchInBrowser(pondModel.url),
-                // onPressed: () => context.read<PondBloc>().getPonds(),
-                label: Text(
-                  'Lokasi',
-                  style: CustomTextStyle.body1Medium
-                      .copyWith(color: CustomColors.primary),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Alamat',
+                  style: CustomTextStyle.body1Medium,
                 ),
-                icon: const Icon(
-                  IconlyBold.location,
-                  size: 18,
+                const SizedBox(height: 4),
+                Text(
+                  '${pondModel.noteAddress} || ${pondModel.detailAddress}, ${pondModel.district.name}, Kec.${pondModel.city.name}, ${pondModel.province.name} - ${pondModel.country.name} ',
+                  style: CustomTextStyle.body2Regular,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(width: 4),
+          TextButton.icon(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: const BorderSide(
+                  color: CustomColors.primary,
+                ),
+              ),
+            )),
+            onPressed: () => launchInBrowser(pondModel.url),
+            // onPressed: () => context.read<PondBloc>().getPonds(),
+            label: Text(
+              'Lokasi',
+              style: CustomTextStyle.body1Medium
+                  .copyWith(color: CustomColors.primary),
+            ),
+            icon: const Icon(
+              IconlyBold.location,
+              size: 18,
+            ),
+          ),
         ],
       ),
     );

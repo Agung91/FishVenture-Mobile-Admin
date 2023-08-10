@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:admin/common/custom/file_picker/model_upload_file.dart';
+import 'package:admin/common/model/model_address.dart';
 import 'package:admin/modules/pool/model/model_pool.dart';
 
 class PondModel {
@@ -11,9 +12,13 @@ class PondModel {
   final String userID;
   final UserPond? user;
   final String countryID;
+  final CountryModel country;
   final String provinceID;
+  final ProvinceModel province;
   final String cityID;
+  final CityModel city;
   final String districtID;
+  final DistrictModel district;
   final String detailAddress;
   final String noteAddress;
   final String type;
@@ -31,9 +36,13 @@ class PondModel {
     required this.userID,
     this.user,
     required this.countryID,
+    required this.country,
     required this.provinceID,
+    required this.province,
     required this.cityID,
+    required this.city,
     required this.districtID,
+    required this.district,
     required this.detailAddress,
     required this.noteAddress,
     required this.type,
@@ -53,9 +62,13 @@ class PondModel {
     String? userID,
     UserPond? user,
     String? countryID,
+    CountryModel? country,
     String? provinceID,
+    ProvinceModel? province,
     String? cityID,
+    CityModel? city,
     String? districtID,
+    DistrictModel? district,
     String? detailAddress,
     String? noteAddress,
     String? type,
@@ -74,9 +87,13 @@ class PondModel {
       userID: userID ?? this.userID,
       user: user ?? this.user,
       countryID: countryID ?? this.countryID,
+      country: country ?? this.country,
       provinceID: provinceID ?? this.provinceID,
+      province: province ?? this.province,
       cityID: cityID ?? this.cityID,
+      city: city ?? this.city,
       districtID: districtID ?? this.districtID,
+      district: district ?? this.district,
       detailAddress: detailAddress ?? this.detailAddress,
       noteAddress: noteAddress ?? this.noteAddress,
       type: type ?? this.type,
@@ -98,9 +115,13 @@ class PondModel {
       'userID': userID,
       'user': user?.toMap(),
       'countryID': countryID,
+      'country': country.toMap(),
       'provinceID': provinceID,
+      'province': province.toMap(),
       'cityID': cityID,
+      'city': city.toMap(),
       'districtID': districtID,
+      'district': district.toMap(),
       'detailAddress': detailAddress,
       'noteAddress': noteAddress,
       'type': type,
@@ -122,9 +143,13 @@ class PondModel {
       userID: map['userID'] ?? '',
       user: map['user'] != null ? UserPond.fromMap(map['user']) : null,
       countryID: map['countryID'] ?? '',
+      country: CountryModel.fromMap(map['country']),
       provinceID: map['provinceID'] ?? '',
+      province: ProvinceModel.fromMap(map['province']),
       cityID: map['cityID'] ?? '',
+      city: CityModel.fromMap(map['city']),
       districtID: map['districtID'] ?? '',
+      district: DistrictModel.fromMap(map['district']),
       detailAddress: map['detailAddress'] ?? '',
       noteAddress: map['noteAddress'] ?? '',
       type: map['type'] ?? '',
@@ -134,8 +159,14 @@ class PondModel {
       longitude: map['longitude']?.toDouble(),
       teamID: map['teamID'],
       image: map['image'] ?? '',
-      listPool: map['listPool'] != null ? List<PoolModel>.from(map['listPool']?.map((x) => PoolModel.fromMap(x))) : null,
-      berkas: map['berkas'] != null ? List<FileModel>.from(map['berkas']?.map((x) => FileModel.fromMap(x))) : null,
+      listPool: map['listPool'] != null
+          ? List<PoolModel>.from(
+              map['listPool']?.map((x) => PoolModel.fromMap(x)))
+          : null,
+      berkas: map['berkas'] != null
+          ? List<FileModel>.from(
+              map['berkas']?.map((x) => FileModel.fromMap(x)))
+          : null,
     );
   }
 
@@ -146,56 +177,64 @@ class PondModel {
 
   @override
   String toString() {
-    return 'PondModel(id: $id, name: $name, userID: $userID, user: $user, countryID: $countryID, provinceID: $provinceID, cityID: $cityID, districtID: $districtID, detailAddress: $detailAddress, noteAddress: $noteAddress, type: $type, url: $url, status: $status, latitude: $latitude, longitude: $longitude, teamID: $teamID, image: $image, listPool: $listPool, berkas: $berkas)';
+    return 'PondModel(id: $id, name: $name, userID: $userID, user: $user, countryID: $countryID, country: $country, provinceID: $provinceID, province: $province, cityID: $cityID, city: $city, districtID: $districtID, district: $district, detailAddress: $detailAddress, noteAddress: $noteAddress, type: $type, url: $url, status: $status, latitude: $latitude, longitude: $longitude, teamID: $teamID, image: $image, listPool: $listPool, berkas: $berkas)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is PondModel &&
-      other.id == id &&
-      other.name == name &&
-      other.userID == userID &&
-      other.user == user &&
-      other.countryID == countryID &&
-      other.provinceID == provinceID &&
-      other.cityID == cityID &&
-      other.districtID == districtID &&
-      other.detailAddress == detailAddress &&
-      other.noteAddress == noteAddress &&
-      other.type == type &&
-      other.url == url &&
-      other.status == status &&
-      other.latitude == latitude &&
-      other.longitude == longitude &&
-      other.teamID == teamID &&
-      other.image == image &&
-      listEquals(other.listPool, listPool) &&
-      listEquals(other.berkas, berkas);
+        other.id == id &&
+        other.name == name &&
+        other.userID == userID &&
+        other.user == user &&
+        other.countryID == countryID &&
+        other.country == country &&
+        other.provinceID == provinceID &&
+        other.province == province &&
+        other.cityID == cityID &&
+        other.city == city &&
+        other.districtID == districtID &&
+        other.district == district &&
+        other.detailAddress == detailAddress &&
+        other.noteAddress == noteAddress &&
+        other.type == type &&
+        other.url == url &&
+        other.status == status &&
+        other.latitude == latitude &&
+        other.longitude == longitude &&
+        other.teamID == teamID &&
+        other.image == image &&
+        listEquals(other.listPool, listPool) &&
+        listEquals(other.berkas, berkas);
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      userID.hashCode ^
-      user.hashCode ^
-      countryID.hashCode ^
-      provinceID.hashCode ^
-      cityID.hashCode ^
-      districtID.hashCode ^
-      detailAddress.hashCode ^
-      noteAddress.hashCode ^
-      type.hashCode ^
-      url.hashCode ^
-      status.hashCode ^
-      latitude.hashCode ^
-      longitude.hashCode ^
-      teamID.hashCode ^
-      image.hashCode ^
-      listPool.hashCode ^
-      berkas.hashCode;
+        name.hashCode ^
+        userID.hashCode ^
+        user.hashCode ^
+        countryID.hashCode ^
+        country.hashCode ^
+        provinceID.hashCode ^
+        province.hashCode ^
+        cityID.hashCode ^
+        city.hashCode ^
+        districtID.hashCode ^
+        district.hashCode ^
+        detailAddress.hashCode ^
+        noteAddress.hashCode ^
+        type.hashCode ^
+        url.hashCode ^
+        status.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode ^
+        teamID.hashCode ^
+        image.hashCode ^
+        listPool.hashCode ^
+        berkas.hashCode;
   }
 }
 
