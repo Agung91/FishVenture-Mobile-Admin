@@ -40,7 +40,7 @@ class PondPage extends StatelessWidget {
             const SizedBox(height: 12),
             _WFile(fileUrl: pondModel.berkas?.first.file ?? '-'),
             const SizedBox(height: 16),
-            _WActionButton(),
+            const _WActionButton(),
             const SizedBox(height: 16),
           ],
         ),
@@ -71,37 +71,48 @@ class _WFile extends StatelessWidget {
           color: CustomColors.white,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              'Berkas',
-              style: CustomTextStyle.body1Medium,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Berkas',
+                    style: CustomTextStyle.body1Medium,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                      'Berikut ini adalah berkas yang di unggah sebagai bagian dari persyaratan yang harus dipenuhi oleh pembudidaya.'),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                        'blabla blaaa blabla blaaa blabla blaaa blabla blaaa blabla blaaa')),
-                const SizedBox(width: 24),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
+            const SizedBox(width: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: CustomColors.primary,
+              ),
+              child: Column(
+                children: [
+                  const Icon(
+                    IconlyLight.document,
+                    size: 26,
+                    color: CustomColors.white,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: CustomColors.primary,
-                  ),
-                  child: Text(
+                  const SizedBox(height: 4),
+                  Text(
                     'Lihat',
-                    style: CustomTextStyle.body1Medium
+                    style: CustomTextStyle.body1Regular
                         .copyWith(color: CustomColors.white),
                   ),
-                ),
-              ],
-            )
+                ],
+              ),
+            ),
           ],
         ),
       ),
