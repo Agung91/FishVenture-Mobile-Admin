@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blocPond = context.read<PondBloc>();
+    final blocProfile = context.read<ProfileBloc>();
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: const _AppbarHome(),
@@ -27,13 +28,22 @@ class HomePage extends StatelessWidget {
             if (listData == null || listData.isEmpty) {
               return EmptyData(
                 label: 'Belum ada pengajuan terbaru',
-                onRefresh: () => blocPond.getPonds(),
+                onRefresh: () async {
+                  blocPond.getPonds();
+                  blocProfile.getProfile();
+                },
               );
             }
             return RefreshIndicator(
-              onRefresh: () => blocPond.getPonds(),
+              onRefresh: () async {
+                blocPond.getPonds();
+                blocProfile.getProfile();
+              },
+              color: CustomColors.primary,
               child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
                 padding:
                     const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
                 itemBuilder: (context, index) {
@@ -70,22 +80,22 @@ class _AppbarHome extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size(double.infinity, 119);
 
-  void show(BuildContext context) {
-    ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-      content: const Text('Error message text'),
-      leading: const CircleAvatar(child: Icon(Icons.delete)),
-      actions: [
-        TextButton(
-          child: const Text('ACTION 1'),
-          onPressed: () {},
-        ),
-        TextButton(
-          child: const Text('ACTION 2'),
-          onPressed: () {},
-        ),
-      ],
-    ));
-  }
+  // void show(BuildContext context) {
+  //   ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+  //     content: const Text('Error message text'),
+  //     leading: const CircleAvatar(child: Icon(Icons.delete)),
+  //     actions: [
+  //       TextButton(
+  //         child: const Text('ACTION 1'),
+  //         onPressed: () {},
+  //       ),
+  //       TextButton(
+  //         child: const Text('ACTION 2'),
+  //         onPressed: () {},
+  //       ),
+  //     ],
+  //   ));
+  // }
 
   @override
   Widget build(BuildContext context) {

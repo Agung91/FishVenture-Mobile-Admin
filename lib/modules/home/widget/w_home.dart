@@ -1,3 +1,6 @@
+import 'package:admin/common/model/model_status.dart';
+import 'package:admin/core/route/bloc_route.dart';
+import 'package:admin/core/route/route_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -18,9 +21,14 @@ class WHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocPond = context.read<PondBloc>();
+    final pondBloc = context.read<PondBloc>();
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (pondModel.status == StatusSubmission.submission) {
+          pondBloc.updatePondReviewed(pondModel.id);
+        }
+        RouteBloc().push(RoutePond(pondModel));
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
@@ -38,7 +46,7 @@ class WHome extends StatelessWidget {
                 placeholder: const AssetImage('assets/load_img.png'),
                 image: CachedNetworkImageProvider(pondModel.image),
                 imageErrorBuilder: (context, error, stackTrace) {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 60,
                     width: 100,
                     child: Icon(
@@ -57,28 +65,27 @@ class WHome extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Pembudidaya 1',
-                  style: CustomTextStyle.body2SemiBold,
+                  pondModel.status,
+                  style: CustomTextStyle.body2Regular
+                      .copyWith(color: CustomColors.grey),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 Text(
-                  'Pengajuan',
-                  style: CustomTextStyle.body2Medium,
+                  pondModel.name,
+                  style: CustomTextStyle.body2SemiBold,
                 ),
               ],
             ),
-            // const Spacer(),
-            // InkWell(
-            //   onTap: () {},
-            //   child: const SizedBox(
-            //     height: 40,
-            //     width: 40,
-            //     child: Icon(
-            //       Iconsax.trash,
-            //       color: CustomColors.red,
-            //     ),
-            //   ),
-            // )
+            const Spacer(),
+            if (pondModel.status == StatusSubmission.submission)
+              Container(
+                height: 10,
+                width: 10,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CustomColors.primary,
+                ),
+              )
           ],
         ),
       ),
