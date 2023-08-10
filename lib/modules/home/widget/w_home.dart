@@ -65,14 +65,14 @@ class WHome extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  pondModel.status,
+                  pondModel.status.toUpperCase(),
                   style: CustomTextStyle.body2Regular
                       .copyWith(color: CustomColors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   pondModel.name,
-                  style: CustomTextStyle.body2SemiBold,
+                  style: CustomTextStyle.body1Medium,
                 ),
               ],
             ),
