@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:admin/core/auth/bloc/authenticated.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sstream/sstream.dart';
 
 import 'package:admin/core/auth/bloc/bloc_auth.dart';
@@ -25,13 +26,17 @@ class RouteBloc extends Authenticated {
 
   @override
   Future<void> onLogout() async {
-    print(
+    if (kDebugMode) {
+      print(
         '================ROUTE==========================${_currentPages.length}');
+    }
     _currentPages.removeWhere((element) => element.name == RouteLogin().name);
     _currentPages.add(RouteLogin());
     _state();
-    print(
+    if (kDebugMode) {
+      print(
         '================ROUTE==========================${_currentPages.length}');
+    }
   }
 
   _state() {

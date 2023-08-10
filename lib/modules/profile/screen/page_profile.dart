@@ -41,20 +41,20 @@ class EditProfilePage extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CircleAvatar(
+                              const CircleAvatar(
                                 radius: 59,
                                 backgroundColor: CustomColors.grey,
                                 backgroundImage:
                                     AssetImage('assets/default_profile.png'),
                               ),
-                              SizedBox(height: 14),
+                              const SizedBox(height: 14),
                               Text(
                                 data.name ?? '-',
                                 style: CustomTextStyle.body1Medium.copyWith(
                                   color: CustomColors.white,
                                 ),
                               ),
-                              SizedBox(height: 2),
+                              const SizedBox(height: 2),
                               Text(
                                 data.email ?? '-',
                                 style: CustomTextStyle.body2Regular.copyWith(
@@ -72,8 +72,8 @@ class EditProfilePage extends StatelessWidget {
               onTap: () {
                 AuthBloc().raise(EventAuthLogout());
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text('LOGOUT'),
               ),
             )

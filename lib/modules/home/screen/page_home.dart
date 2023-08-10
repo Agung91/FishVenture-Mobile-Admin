@@ -1,5 +1,8 @@
+import 'package:admin/common/custom/empty_data.dart';
 import 'package:admin/config/text_style.dart';
 import 'package:admin/modules/home/widget/w_home.dart';
+import 'package:admin/modules/pond/bloc/bloc_pond.dart';
+import 'package:admin/modules/pond/model/model_pond.dart';
 import 'package:admin/modules/profile/bloc/bloc_profile.dart';
 import 'package:admin/modules/profile/model/model_profile.dart';
 import 'package:flutter/material.dart';
@@ -12,19 +15,49 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blocPond = context.read<PondBloc>();
+    final blocProfile = context.read<ProfileBloc>();
     return Scaffold(
       backgroundColor: CustomColors.background,
       appBar: const _AppbarHome(),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
-        itemBuilder: (context, index) {
-          return const WHome();
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 8);
-        },
-        itemCount: 12,
-      ),
+      body: StreamBuilder<List<PondModel>>(
+          stream: blocPond.listPond.stream,
+          initialData: blocPond.listPond.value,
+          builder: (context, snapshot) {
+            final listData = snapshot.data;
+            if (listData == null || listData.isEmpty) {
+              return EmptyData(
+                label: 'Belum ada pengajuan terbaru',
+                onRefresh: () async {
+                  blocPond.getPonds();
+                  blocProfile.getProfile();
+                },
+              );
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                blocPond.getPonds();
+                blocProfile.getProfile();
+              },
+              color: CustomColors.primary,
+              child: ListView.separated(
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
+                itemBuilder: (context, index) {
+                  return WHome(
+                    pondModel: listData[index],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 8);
+                },
+                itemCount: listData.length,
+              ),
+            );
+          }),
       // bottomNavigationBar: Container(
       //   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       //   color: CustomColors.white,
@@ -47,22 +80,22 @@ class _AppbarHome extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size(double.infinity, 119);
 
-  void show(BuildContext context) {
-    ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
-      content: const Text('Error message text'),
-      leading: const CircleAvatar(child: Icon(Icons.delete)),
-      actions: [
-        TextButton(
-          child: const Text('ACTION 1'),
-          onPressed: () {},
-        ),
-        TextButton(
-          child: const Text('ACTION 2'),
-          onPressed: () {},
-        ),
-      ],
-    ));
-  }
+  // void show(BuildContext context) {
+  //   ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+  //     content: const Text('Error message text'),
+  //     leading: const CircleAvatar(child: Icon(Icons.delete)),
+  //     actions: [
+  //       TextButton(
+  //         child: const Text('ACTION 1'),
+  //         onPressed: () {},
+  //       ),
+  //       TextButton(
+  //         child: const Text('ACTION 2'),
+  //         onPressed: () {},
+  //       ),
+  //     ],
+  //   ));
+  // }
 
   @override
   Widget build(BuildContext context) {
