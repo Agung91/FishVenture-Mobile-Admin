@@ -1,3 +1,5 @@
+import 'package:admin/common/snackbar/snackbar_popup.dart';
+import 'package:admin/core/route/bloc_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -157,7 +159,14 @@ class _WActionButton extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () => blocPond.updatePondDisabled(pondModel.id),
+                  onPressed: () {
+                    blocPond.updatePondDisabled(pondModel.id).then((value) =>
+                        snacBarPopUp(context,
+                            color: CustomColors.green,
+                            icon: IconlyBold.tick_square,
+                            text: 'Berhasil menolak budidaya'));
+                    RouteBloc().pop();
+                  },
                   child: Text(
                     'Tolak',
                     style: CustomTextStyle.body2Medium
@@ -176,7 +185,14 @@ class _WActionButton extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    blocPond.updatePondActived(pondModel.id).then((value) =>
+                        snacBarPopUp(context,
+                            color: CustomColors.green,
+                            icon: IconlyBold.tick_square,
+                            text: 'Berhasil mengaktifkan budidaya'));
+                    RouteBloc().pop();
+                  },
                   child: Text(
                     'Terima',
                     style: CustomTextStyle.body2Medium
