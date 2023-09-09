@@ -162,10 +162,10 @@ class _WActionButton extends StatelessWidget {
                   ),
                   onPressed: () {
                     blocPond.updatePondDisabled(pondModel.id).then((value) =>
-                        snacBarPopUp(context,
+                        snacBarPopUp(
                             color: CustomColors.green,
                             icon: IconlyBold.tick_square,
-                            text: 'Berhasil menolak budidaya'));
+                            message: 'Berhasil menolak budidaya'));
                     RouteBloc().pop();
                   },
                   child: Text(
@@ -188,10 +188,10 @@ class _WActionButton extends StatelessWidget {
                   ),
                   onPressed: () {
                     blocPond.updatePondActived(pondModel.id).then((value) =>
-                        snacBarPopUp(context,
+                        snacBarPopUp(
                             color: CustomColors.green,
                             icon: IconlyBold.tick_square,
-                            text: 'Berhasil mengaktifkan budidaya'));
+                            message: 'Berhasil mengaktifkan budidaya'));
                     RouteBloc().pop();
                   },
                   child: Text(

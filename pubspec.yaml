@@ -36,6 +36,7 @@ dependencies:
  
   # http
   dio: ^5.2.1
+  connectivity_plus: ^4.0.2
   
   # Open Link
   url_launcher: ^6.1.11

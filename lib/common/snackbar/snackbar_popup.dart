@@ -1,15 +1,16 @@
 import 'package:admin/config/text_style.dart';
+import 'package:admin/core/context.dart';
 import 'package:flutter/material.dart';
 
-void snacBarPopUp(
-  BuildContext context, {
-  required String text,
+void snacBarPopUp({
+  required String message,
   required Color color,
   required IconData icon,
+  int? duration,
 }) {
-  ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(milliseconds: 1200),
+  snackbarKey.currentState?.removeCurrentSnackBar();
+  snackbarKey.currentState?.showSnackBar(SnackBar(
+      duration: Duration(milliseconds: duration ?? 1200),
       // duration: const Duration(milliseconds: 10000000),
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -33,7 +34,7 @@ void snacBarPopUp(
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                text,
+                message,
                 style:
                     CustomTextStyle.body1Medium.copyWith(color: Colors.white),
               ),
