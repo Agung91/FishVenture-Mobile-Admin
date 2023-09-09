@@ -43,7 +43,8 @@ class PondPage extends StatelessWidget {
             const SizedBox(height: 12),
             _WFile(fileUrl: pondModel.berkas?.first.file ?? '-'),
             const SizedBox(height: 16),
-            if (pondModel.status == StatusSubmission.submission)
+            if (pondModel.status == StatusSubmission.submission ||
+                pondModel.status == StatusSubmission.reviewed)
               _WActionButton(pondModel: pondModel),
           ],
         ),

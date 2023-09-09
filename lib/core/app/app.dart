@@ -1,3 +1,4 @@
+import 'package:admin/core/context.dart';
 import 'package:admin/modules/login/screen/page_login.dart';
 import 'package:admin/modules/pond/bloc/bloc_pond.dart';
 import 'package:admin/modules/pond/repo/repo_pond.dart';
@@ -61,6 +62,7 @@ class _AppState extends State<App> {
       ],
       child: MaterialApp(
         title: 'Aplikasi Admin',
+        scaffoldMessengerKey: snackbarKey,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

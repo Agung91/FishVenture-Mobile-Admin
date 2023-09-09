@@ -5,4 +5,3 @@ abstract class PondService {
   Future<List<PondModel>> getListPond();
   Future<String?> updatePond(UpdatePondInput input);
 }
-
