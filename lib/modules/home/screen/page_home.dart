@@ -3,6 +3,7 @@ import 'package:admin/config/text_style.dart';
 import 'package:admin/modules/home/widget/w_home.dart';
 import 'package:admin/modules/pond/bloc/bloc_pond.dart';
 import 'package:admin/modules/pond/model/model_pond.dart';
+import 'package:admin/modules/pool/screen/page_list_pool.dart';
 import 'package:admin/modules/profile/bloc/bloc_profile.dart';
 import 'package:admin/modules/profile/model/model_profile.dart';
 import 'package:flutter/material.dart';
@@ -30,14 +31,14 @@ class HomePage extends StatelessWidget {
                 label: 'Belum ada pengajuan terbaru',
                 onRefresh: () async {
                   blocPond.getPonds();
-                  blocProfile.getProfile();
+                  await blocProfile.getProfile();
                 },
               );
             }
             return RefreshIndicator(
               onRefresh: () async {
                 blocPond.getPonds();
-                blocProfile.getProfile();
+                await blocProfile.getProfile();
               },
               color: CustomColors.primary,
               child: ListView.separated(
