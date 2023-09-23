@@ -296,7 +296,7 @@ class _WAddress extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${pondModel.noteAddress} || ${pondModel.detailAddress}, ${pondModel.district.name}, Kec.${pondModel.city.name}, ${pondModel.province.name} - ${pondModel.country.name} ',
+                  '${pondModel.noteAddress} || ${pondModel.detailAddress}, Kec.${pondModel.district.name}, ${pondModel.city.name}, ${pondModel.province.name} - ${pondModel.country.name} ',
                   style: CustomTextStyle.body2Regular,
                 ),
               ],
